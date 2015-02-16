@@ -1,0 +1,1 @@
+require 'filter_decrufter/checker'
