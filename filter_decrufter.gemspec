@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.summary = "Finds cruft in Rails filters"
   s.description = "Finds old action symbols in Rails before / after / around filters"
   s.license = 'MIT'
+  s.authors = ['Tom Copeland']
   s.rubyforge_project = 'none'
   s.files = Dir['lib/**/*', '*\.md', 'doc/**/*']
   s.bindir = 'bin'
