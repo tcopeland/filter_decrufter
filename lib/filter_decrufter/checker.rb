@@ -35,7 +35,7 @@ module FilterDecrufter
       [populated_only_except[name]].flatten.each do |action_syms|
         [action_syms].flatten.each do |action_to_filter|
           if !action_methods.include?(action_to_filter)
-            puts "#{controller_class} before_filter #{filter_name} has an :#{name} constraint with a non-existent action name #{action_to_filter}"
+            puts "#{controller_class} before_filter #{filter_name} has an :#{name} constraint with a non-existent action name '#{action_to_filter}'"
           end
         end
       end
