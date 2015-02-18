@@ -1,41 +1,64 @@
 module FilterDecrufter
 
+  class Hit
+
+    attr_accessor :controller_class, :before_filter_name, :options, :filter_type
+
+    def initialize(controller_class, before_filter_name, options, filter_type)
+      @controller_class = controller_class
+      @before_filter_name = before_filter_name
+      @options = options
+      @filter_type = filter_type
+    end
+
+    def actions_include?(action_name)
+      action_methods.include?(action_name)
+    end
+
+    def populated_only_except_options
+      options.select {|opt_name,opt_value| [:only,:except].include?(opt_name) && !opt_value.empty? }
+    end
+
+    private
+
+    def action_methods
+      controller_class.action_methods.map &:to_sym
+    end
+
+  end
+
   class Report
 
-    attr_accessor :controller_to_filter_collection
+    attr_accessor :hits
 
     def self.instance
       @instance ||= Report.new
     end
 
     def initialize
-     @controller_to_filter_collection = {}
+     @hits = []
     end
 
-    def add(controller_class, before_filter_name, options)
-       # TODO could use some data structure vs Hash of hashes
-       before_filter_options = controller_to_filter_collection[controller_class] ||= {}
-       before_filter_options[before_filter_name] = options
-       raise "Oops filter_decrufter can't handle this version of Rails" unless controller_class.respond_to?(:action_methods)
+    def add(hit)
+      raise "Oops filter_decrufter can't handle this version of Rails" unless hit.controller_class.respond_to?(:action_methods)
+      hits << hit
     end
 
     def find_problems
-      controller_to_filter_collection.each do |controller_class, before_filter_to_options_map|
-        action_methods = controller_class.action_methods.map &:to_sym
-        before_filter_to_options_map.each do |filter_name, opts|
-          populated_only_except = opts.select {|opt_name,opt_value| [:only,:except].include?(opt_name) && !opt_value.empty? }
+      hits.each do |hit|
+        hit.populated_only_except_options.each do |k,v|
           [:only, :except].each do |constraint_name|
-            check_constraint(constraint_name, action_methods, populated_only_except, controller_class, filter_name) if populated_only_except[constraint_name].present?
+            check_constraint(constraint_name, hit) if hit.populated_only_except_options[constraint_name].present?
           end
         end
       end
     end
 
-    def check_constraint(name, action_methods, populated_only_except, controller_class, filter_name)
-      [populated_only_except[name]].flatten.each do |action_syms|
-        [action_syms].flatten.each do |action_to_filter|
-          if !action_methods.include?(action_to_filter)
-            puts "#{controller_class} before_filter '#{filter_name}' has an :#{name} constraint with a non-existent action name '#{action_to_filter}'"
+    def check_constraint(name, hit)
+      [hit.populated_only_except_options[name]].flatten.each do |action_syms|
+        [action_syms].flatten.each do |action_name|
+          if !hit.actions_include?(action_name)
+            puts "#{hit.controller_class} #{hit.filter_type} '#{hit.before_filter_name}' has an :#{name} constraint with a non-existent action name '#{action_name}'"
           end
         end
       end
@@ -66,7 +89,7 @@ module FilterDecrufter
     def patch_method(filter_sym)
       ApplicationController.define_singleton_method(filter_sym) do |*args, &blk|
         if args.many? && (args[1][:only].present? || args[1][:except].present?)
-          Report.instance.add(self, args[0], args[1])
+          Report.instance.add(FilterDecrufter::Hit.new(self, args[0], args[1], filter_sym))
         end
         super(*args, &blk)
       end
