@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name = 'filter_decrufter'
   s.version = FilterDecrufter::VERSION
   s.email = "tom@thomasleecopeland.com"
-  s.homepage = "https://github.com/tcopeland/pippi"
+  s.homepage = "https://github.com/tcopeland/filter_decrufter"
   s.summary = "Finds cruft in Rails filters"
   s.description = "Finds old action symbols in Rails before / after / around filters"
   s.license = 'MIT'
