@@ -23,8 +23,8 @@ Tell your Rakefile to load up the FilterDecrufter tasks (well, task):
 And run the task!
 
     $ bundle exec rake filter_decrufter:check 
-    Api::V1::WidgetsController before_filter find_widget has an :only constraint with a non-existent action name show
-    EmployeesController before_filter set_name has an :only constraint with a non-existent action name frobnicate
+    Api::V1::WidgetsController before_filter 'find_widget' has an :only constraint with a non-existent action name 'show'
+    EmployeesController before_filter 'set_name' has an :only constraint with a non-existent action name 'frobnicate'
 
 Tested with Rails 3.2.
 
