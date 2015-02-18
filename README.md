@@ -15,16 +15,11 @@ Add it to your Gemfile in the development group:
     # In your Gemfile
     gem 'filter_decrufter'
 
-Tell your Rakefile to load up the FilterDecrufter tasks (well, task):
-
-    # In your Rakefile
-    require 'filter_decrufter/tasks'
-
-And run the task!
+Run the task!
 
     $ bundle exec rake filter_decrufter:check 
     Api::V1::WidgetsController before_filter 'find_widget' has an :only constraint with a non-existent action name 'show'
-    EmployeesController before_filter 'set_name' has an :only constraint with a non-existent action name 'frobnicate'
+    EmployeesController after_filter 'set_name' has an :only constraint with a non-existent action name 'frobnicate'
 
 Tested with Rails 3.2.
 
