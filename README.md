@@ -26,4 +26,4 @@ Tested with Rails 3.2.
 # Credits
 
 * [Tom Copeland](http://thomasleecopeland.com) - author
-* [John Moon](https://twitter.com/johnmoon6) - design discussions
+* [John Moon](http://www.thinkandgrowentrepreneur.com/) - design discussions
