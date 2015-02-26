@@ -25,5 +25,5 @@ Tested with Rails 3.2.
 
 # Credits
 
-* Tom Copeland - author
-* John Moon - design discussions
+* [Tom Copeland](http://thomasleecopeland.com) - author
+* [John Moon](https://twitter.com/johnmoon6) - design discussions
