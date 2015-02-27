@@ -2,11 +2,11 @@ module FilterDecrufter
 
   class Hit
 
-    attr_accessor :controller_class, :before_filter_name, :options, :filter_type
+    attr_accessor :controller_class, :filter_name, :options, :filter_type
 
-    def initialize(controller_class, before_filter_name, options, filter_type)
+    def initialize(controller_class, filter_name, options, filter_type)
       @controller_class = controller_class
-      @before_filter_name = before_filter_name
+      @filter_name = filter_name
       @options = options
       @filter_type = filter_type
     end
@@ -58,7 +58,7 @@ module FilterDecrufter
       [hit.populated_only_except_options[name]].flatten.each do |action_syms|
         [action_syms].flatten.each do |action_name|
           if !hit.actions_include?(action_name)
-            puts "#{hit.controller_class} #{hit.filter_type} '#{hit.before_filter_name}' has an :#{name} constraint with a non-existent action name '#{action_name}'"
+            puts "#{hit.controller_class} #{hit.filter_type} '#{hit.filter_name}' has an :#{name} constraint with a non-existent action name '#{action_name}'"
           end
         end
       end
@@ -74,13 +74,17 @@ module FilterDecrufter
     end
 
     def check
-      [:before_filter, :around_filter, :after_filter].each {|s| patch_method(s) }
+      filter_method_names.each {|s| patch_method(s) }
       load_all_controllers
       show_report
       nil
     end
 
     private
+
+    def filter_method_names
+      [:before, :around, :after].map {|s| ["#{s}_filter", "#{s}_action"]}.flatten.sort.map(&:to_sym)
+    end
 
     def show_report
       Report.instance.find_problems

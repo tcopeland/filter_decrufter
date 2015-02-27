@@ -21,9 +21,10 @@ Run the task!
     Api::V1::WidgetsController before_filter 'find_widget' has an :only constraint with a non-existent action name 'show'
     EmployeesController after_filter 'set_name' has an :only constraint with a non-existent action name 'frobnicate'
 
-Tested with Rails 3.2 and 4.0
+Tested with Rails 3.2, 4.0, and 4.2.
 
 # Credits
 
+* [Sandeep Kumar](https://whatpeoplethink.wordpress.com/) - Rails 4.2 support
 * [Tom Copeland](http://thomasleecopeland.com) - author
 * [John Moon](http://www.thinkandgrowentrepreneur.com/) - design discussions

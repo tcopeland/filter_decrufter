@@ -1,3 +1,7 @@
+## 0.0.4 (2015-02-27)
+
+* [FIXED] Check for before|after|around_action for Rails 4.2
+
 ## 0.0.3 (2015-02-18)
 
 * [FIXED] No longer reports all violations as being for before_filters
