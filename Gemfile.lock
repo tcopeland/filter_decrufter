@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    filter_decrufter (0.0.4)
+    filter_decrufter (0.0.5)
 
 GEM
   remote: https://rubygems.org/
