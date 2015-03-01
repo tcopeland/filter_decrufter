@@ -15,8 +15,8 @@ module FilterDecrufter
       action_methods.include?(action_name)
     end
 
-    def populated_only_except_options
-      options.select {|opt_name,opt_value| [:only,:except].include?(opt_name) && !opt_value.empty? }
+    def populated_options_for(name)
+      options.select {|opt_name,opt_value| opt_name == name && !opt_value.empty? }
     end
 
     private
@@ -46,16 +46,14 @@ module FilterDecrufter
 
     def find_problems
       hits.each do |hit|
-        hit.populated_only_except_options.each do |k,v|
-          [:only, :except].each do |constraint_name|
-            check_constraint(constraint_name, hit) if hit.populated_only_except_options[constraint_name].present?
-          end
+        [:only, :except].each do |constraint_name|
+          check_constraint(constraint_name, hit) if hit.populated_options_for(constraint_name)[constraint_name].present?
         end
       end
     end
 
     def check_constraint(name, hit)
-      [hit.populated_only_except_options[name]].flatten.each do |action_syms|
+      [hit.populated_options_for(name)[name]].flatten.each do |action_syms|
         [action_syms].flatten.each do |action_name|
           if !hit.actions_include?(action_name)
             puts "#{hit.controller_class} #{hit.filter_type} '#{hit.filter_name}' has an :#{name} constraint with a non-existent action name '#{action_name}'"

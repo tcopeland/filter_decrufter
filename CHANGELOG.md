@@ -1,3 +1,7 @@
+## 0.0.5 (?)
+
+* [FIXED] If a filter/action contains both an 'except' and an 'only' constraint and both referred to an unused action, FilterDecrufter will no longer display both as being 'only' constraints.
+
 ## 0.0.4 (2015-02-27)
 
 * [FIXED] Check for before|after|around_action for Rails 4.2
