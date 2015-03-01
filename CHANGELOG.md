@@ -1,6 +1,7 @@
-## 0.0.5 (?)
+## 0.0.5 (2015-02-28)
 
 * [FIXED] If a filter/action contains both an 'except' and an 'only' constraint and both referred to an unused action, FilterDecrufter will no longer display both as being 'only' constraints.
+* [FIXED] No longer is an exception raised if a filter is defined with multiple methods, e.g., `before_action :foo, :bar, :only => :buz`
 
 ## 0.0.4 (2015-02-27)
 

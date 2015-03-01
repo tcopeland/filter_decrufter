@@ -90,8 +90,12 @@ module FilterDecrufter
 
     def patch_method(filter_sym)
       ApplicationController.define_singleton_method(filter_sym) do |*args, &blk|
-        if args.many? && (args[1][:only].present? || args[1][:except].present?)
-          Report.instance.add(FilterDecrufter::Hit.new(self, args[0], args[1], filter_sym))
+        filter_names = args.select {|a| a.kind_of?(Symbol) }
+        filter_options = args.detect {|a| a.kind_of?(Hash) }
+        if filter_options.present? && (filter_options[:only].present? || filter_options[:except].present?)
+          filter_names.each do |name|
+            Report.instance.add(FilterDecrufter::Hit.new(self, name, filter_options, filter_sym))
+          end
         end
         super(*args, &blk)
       end
