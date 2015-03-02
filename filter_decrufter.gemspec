@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.bindir = 'bin'
   s.require_paths = ['lib']
   s.add_development_dependency 'rake', '~> 10.1'
+  s.add_development_dependency 'mocha', '~> 0.14'
   s.add_development_dependency 'minitest', '~> 5.0'
   s.required_ruby_version = '>= 1.9.3'
   

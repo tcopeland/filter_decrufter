@@ -1,12 +1,12 @@
 class AnotherFakeController < ApplicationController
 
-  def self.action_methods
-    [:foo]
-  end
-
   before_action :foo, :only => [:bar]
 
   def foo
+  end
+
+  def self.my_action_methods
+    [:foo]
   end
 
 end
