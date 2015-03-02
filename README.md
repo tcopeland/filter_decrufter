@@ -28,4 +28,5 @@ Tested with Rails 3.2, 4.0, and 4.2.
 * [John Moon](http://www.thinkandgrowentrepreneur.com/) - design discussions
 * [Mike Foley](https://twitter.com/m1foley) - filter with multiple method bug report
 * [Sandeep Kumar](https://whatpeoplethink.wordpress.com/) - Rails 4.2 support
+* [ipmsteve](https://github.com/ipmsteven) - code cleanup
 * [Tom Copeland](http://thomasleecopeland.com) - author
