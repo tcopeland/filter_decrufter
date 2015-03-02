@@ -89,7 +89,7 @@ module FilterDecrufter
     end
 
     def patch_method(filter_sym)
-      ApplicationController.define_singleton_method(filter_sym) do |*args, &blk|
+      ActionController::Base.define_singleton_method(filter_sym) do |*args, &blk|
         filter_names = args.select {|a| a.kind_of?(Symbol) }
         filter_options = args.detect {|a| a.kind_of?(Hash) }
         if filter_options.present? && (filter_options[:only].present? || filter_options[:except].present?)
